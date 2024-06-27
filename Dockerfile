@@ -1,15 +1,12 @@
-# Use the official CentOS 7 base image
-FROM centos:centos7
+# Dockerfile for the given HTML code
+# Use an official Nginx base image
+FROM nginx:alpine
 
-# Install the Apache HTTP server package from the CentOS repository
-RUN yum install httpd -y
+# Copy the HTML file into the Nginx default web directory
+COPY ./DemoProject/project.html /usr/share/nginx/html
 
-# Copy the index.html file from the Docker build context to the default Apache document root directory in the container
-#WORKDIR /Dev
-COPY * .
-
-# Specify the command to run when the container starts, which starts the Apache HTTP server in the foreground
-#CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
-
-# Expose port 80 to allow incoming HTTP traffic to the container
+# Expose port 80 (the default Nginx port)
 EXPOSE 80
+
+# Start Nginx when the container runs
+CMD ["nginx", "-g", "daemon off;"]
